@@ -81,6 +81,7 @@ export const addWebhookFlow = async (request, token) => {
   const triggerStep = await updateFlowStep(request, token, triggerStepId, {
     appKey: 'webhook',
     key: 'catchRawWebhook',
+    name: 'Webhook',
     parameters: {
       workSynchronously: false,
     },
@@ -91,6 +92,7 @@ export const addWebhookFlow = async (request, token) => {
   await updateFlowStep(request, token, actionStepId, {
     appKey: 'webhook',
     key: 'respondWith',
+    name: 'Webhook',
     parameters: {
       statusCode: '200',
       body: 'ok',
