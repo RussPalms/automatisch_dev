@@ -1,6 +1,7 @@
 import App from './app.js';
-import AppAuthClient from './app-auth-client.js';
+import OAuthClient from './oauth-client.js';
 import Base from './base.js';
+import { ValidationError } from 'objection';
 
 class AppConfig extends Base {
   static tableName = 'app_configs';
@@ -24,12 +25,12 @@ class AppConfig extends Base {
   };
 
   static relationMappings = () => ({
-    appAuthClients: {
+    oauthClients: {
       relation: Base.HasManyRelation,
-      modelClass: AppAuthClient,
+      modelClass: OAuthClient,
       join: {
         from: 'app_configs.key',
-        to: 'app_auth_clients.app_key',
+        to: 'oauth_clients.app_key',
       },
     },
   });
@@ -38,6 +39,27 @@ class AppConfig extends Base {
     if (!this.key) return null;
 
     return await App.findOneByKey(this.key);
+  }
+
+  async createOAuthClient(params) {
+    const supportsOauthClients = (await this.getApp())?.auth?.generateAuthUrl
+      ? true
+      : false;
+
+    if (!supportsOauthClients) {
+      throw new ValidationError({
+        data: {
+          app: [
+            {
+              message: 'This app does not support OAuth clients!',
+            },
+          ],
+        },
+        type: 'ModelValidation',
+      });
+    }
+
+    return await this.$relatedQuery('oauthClients').insert(params);
   }
 }
 

@@ -4,7 +4,7 @@ import permissionSerializer from './permission.js';
 import adminSamlAuthProviderSerializer from './admin-saml-auth-provider.ee.js';
 import samlAuthProviderSerializer from './saml-auth-provider.ee.js';
 import samlAuthProviderRoleMappingSerializer from './role-mapping.ee.js';
-import appAuthClientSerializer from './app-auth-client.js';
+import oauthClientSerializer from './oauth-client.js';
 import appConfigSerializer from './app-config.js';
 import flowSerializer from './flow.js';
 import stepSerializer from './step.js';
@@ -19,6 +19,7 @@ import executionStepSerializer from './execution-step.js';
 import subscriptionSerializer from './subscription.ee.js';
 import adminUserSerializer from './admin/user.js';
 import configSerializer from './config.js';
+import folderSerializer from './folder.js';
 
 const serializers = {
   AdminUser: adminUserSerializer,
@@ -28,7 +29,7 @@ const serializers = {
   AdminSamlAuthProvider: adminSamlAuthProviderSerializer,
   SamlAuthProvider: samlAuthProviderSerializer,
   RoleMapping: samlAuthProviderRoleMappingSerializer,
-  AppAuthClient: appAuthClientSerializer,
+  OAuthClient: oauthClientSerializer,
   AppConfig: appConfigSerializer,
   Flow: flowSerializer,
   Step: stepSerializer,
@@ -42,6 +43,7 @@ const serializers = {
   ExecutionStep: executionStepSerializer,
   Subscription: subscriptionSerializer,
   Config: configSerializer,
+  Folder: folderSerializer,
 };
 
 export default serializers;

@@ -21,16 +21,18 @@ const PermissionCatalogField = ({
   name = 'permissions',
   disabled = false,
   syncIsCreator = false,
+  loading = false,
 }) => {
   const { data, isLoading: isPermissionCatalogLoading } =
     usePermissionCatalog();
   const permissionCatalog = data?.data;
   const [dialogName, setDialogName] = React.useState();
 
-  if (isPermissionCatalogLoading) return <PermissionCatalogFieldLoader />;
+  if (isPermissionCatalogLoading || loading)
+    return <PermissionCatalogFieldLoader />;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer data-test="permissions-catalog" component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -118,6 +120,7 @@ PermissionCatalogField.propTypes = {
   name: PropTypes.string,
   disabled: PropTypes.bool,
   syncIsCreator: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default PermissionCatalogField;

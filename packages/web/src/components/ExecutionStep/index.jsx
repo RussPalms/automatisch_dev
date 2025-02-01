@@ -9,6 +9,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 
 import TabPanel from 'components/TabPanel';
 import SearchableJSONViewer from 'components/SearchableJSONViewer';
@@ -108,6 +109,10 @@ function ExecutionStep(props) {
 
   const hasError = !!executionStep.errorDetails;
 
+  const stepTypeName = isTrigger
+    ? formatMessage('flowStep.triggerType')
+    : formatMessage('flowStep.actionType');
+
   return (
     <Wrapper elevation={1} data-test="execution-step">
       <Header>
@@ -127,13 +132,25 @@ function ExecutionStep(props) {
             <ExecutionStepId id={executionStep.step.id} />
 
             <Box flex="1" gridArea="step">
-              <Typography data-test="step-type" variant="caption">
-                {isTrigger && formatMessage('flowStep.triggerType')}
-                {isAction && formatMessage('flowStep.actionType')}
+              <Typography
+                component={Stack}
+                direction="row"
+                variant="stepApp"
+                alignItems="center"
+                gap={0.5}
+              >
+                <Chip
+                  data-test="step-type"
+                  label={stepTypeName}
+                  variant="stepType"
+                  size="small"
+                />
+
+                {app?.name}
               </Typography>
 
               <Typography data-test="step-position-and-name" variant="body2">
-                {step.position}. {app?.name}
+                {step.position}. {step.name}
               </Typography>
             </Box>
 

@@ -13,7 +13,6 @@ import useCreateConnectionAuthUrl from './useCreateConnectionAuthUrl';
 import useUpdateConnection from './useUpdateConnection';
 import useResetConnection from './useResetConnection';
 import useVerifyConnection from './useVerifyConnection';
-import { useWhatChanged } from '@simbathesailor/use-what-changed';
 
 function getSteps(auth, hasConnection, useShared) {
   if (hasConnection) {
@@ -31,7 +30,7 @@ function getSteps(auth, hasConnection, useShared) {
 }
 
 export default function useAuthenticateApp(payload) {
-  const { appKey, appAuthClientId, connectionId, useShared = false } = payload;
+  const { appKey, oauthClientId, connectionId, useShared = false } = payload;
   const { data: auth } = useAppAuth(appKey);
   const queryClient = useQueryClient();
   const { mutateAsync: createConnection } = useCreateConnection(appKey);
@@ -55,7 +54,7 @@ export default function useAuthenticateApp(payload) {
 
       const response = {
         key: appKey,
-        appAuthClientId: appAuthClientId || payload.appAuthClientId,
+        oauthClientId: oauthClientId || payload.oauthClientId,
         connectionId,
         fields,
       };
@@ -133,7 +132,7 @@ export default function useAuthenticateApp(payload) {
   }, [
     steps,
     appKey,
-    appAuthClientId,
+    oauthClientId,
     connectionId,
     queryClient,
     createConnection,
@@ -142,24 +141,6 @@ export default function useAuthenticateApp(payload) {
     resetConnection,
     verifyConnection,
   ]);
-
-  useWhatChanged(
-    [
-      steps,
-      appKey,
-      appAuthClientId,
-      connectionId,
-      queryClient,
-      createConnection,
-      createConnectionAuthUrl,
-      updateConnection,
-      resetConnection,
-      verifyConnection,
-    ],
-    'steps, appKey, appAuthClientId, connectionId, queryClient, createConnection, createConnectionAuthUrl, updateConnection, resetConnection, verifyConnection',
-    '',
-    'useAuthenticate',
-  );
 
   return {
     authenticate,

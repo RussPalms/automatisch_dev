@@ -113,6 +113,14 @@ const authorizationList = {
     action: 'create',
     subject: 'Flow',
   },
+  'POST /api/v1/flows/:flowId/export': {
+    action: 'update',
+    subject: 'Flow',
+  },
+  'POST /api/v1/flows/import': {
+    action: 'create',
+    subject: 'Flow',
+  },
   'POST /api/v1/flows/:flowId/steps': {
     action: 'update',
     subject: 'Flow',
@@ -124,6 +132,22 @@ const authorizationList = {
   'POST /api/v1/connections/:connectionId/auth-url': {
     action: 'create',
     subject: 'Connection',
+  },
+  'POST /api/v1/folders/': {
+    action: 'create',
+    subject: 'Flow',
+  },
+  'PATCH /api/v1/folders/:folderId': {
+    action: 'create',
+    subject: 'Flow',
+  },
+  'DELETE /api/v1/folders/:folderId': {
+    action: 'create',
+    subject: 'Flow',
+  },
+  'GET /api/v1/folders/': {
+    action: 'read',
+    subject: 'Flow',
   },
 };
 
